@@ -1,14 +1,34 @@
 <template>
   <div id="nav">
     <router-link to="/"> Home </router-link>
-    <router-link to="/dashboard"> Dashboard </router-link>
+    <router-link v-if="loggedIn" to="/dashboard"> Dashboard </router-link>
+    <router-link v-if="!loggedIn" to="/login" class="button">
+      Login
+    </router-link>
+    <button v-else @click="logout" class="button">Logout</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-export default defineComponent({});
+import { authComputed } from "@/store/helpers";
+import store from "@/store";
+
+export default defineComponent({
+  computed: {
+    ...authComputed,
+  },
+  setup() {
+    function logout() {
+      store.dispatch("logout");
+      console.log("logout");
+    }
+    return {
+      logout,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

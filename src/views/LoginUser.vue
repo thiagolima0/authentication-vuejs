@@ -1,19 +1,16 @@
 <template>
   <div>
-    <form @submit.prevent="register">
-      <label for="name"> Name: </label>
-      <input v-model="name" type="text" name="name" value />
-
+    <form @submit.prevent="login">
       <label for="email"> Email: </label>
       <input v-model="email" type="email" name="email" value />
 
       <label for="password"> Password: </label>
       <input v-model="password" type="password" name="password" value />
 
-      <button type="submit" name="button">Register</button>
+      <button type="submit" name="button">Login</button>
     </form>
-    <router-link :to="{ name: 'login' }">
-      Already have an account? Login.
+    <router-link :to="{ name: 'register' }">
+      Don't have a account? Register.
     </router-link>
   </div>
 </template>
@@ -25,14 +22,12 @@ import router from "@/router";
 
 export default defineComponent({
   setup() {
-    const name = ref("");
     const email = ref("");
     const password = ref("");
 
-    function register() {
+    function login() {
       store
-        .dispatch("register", {
-          name: name.value,
+        .dispatch("login", {
           email: email.value,
           password: password.value,
         })
@@ -41,10 +36,9 @@ export default defineComponent({
         });
     }
     return {
-      name,
       email,
       password,
-      register,
+      login,
     };
   },
 });
