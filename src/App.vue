@@ -8,9 +8,27 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import AppNav from "@/components/AppNav.vue";
+import store from "./store";
+import axios from "axios";
 
 export default defineComponent({
   components: { AppNav },
+  created() {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const userData = JSON.parse(userString);
+      store.commit("SET_USER_DATA", userData);
+    }
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response.status === 401) {
+          store.dispatch("logout");
+        }
+        return Promise.reject(error);
+      }
+    );
+  },
 });
 </script>
 
