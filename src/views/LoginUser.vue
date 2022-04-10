@@ -6,7 +6,7 @@
 
       <label for="password"> Password: </label>
       <input v-model="password" type="password" name="password" value />
-
+      <p>{{ error }}</p>
       <button type="submit" name="button">Login</button>
     </form>
     <router-link :to="{ name: 'register' }">
@@ -24,6 +24,7 @@ export default defineComponent({
   setup() {
     const email = ref("");
     const password = ref("");
+    const error = ref(null);
 
     function login() {
       store
@@ -33,11 +34,15 @@ export default defineComponent({
         })
         .then(() => {
           router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          error.value = err.response.data.error;
         });
     }
     return {
       email,
       password,
+      error,
       login,
     };
   },
