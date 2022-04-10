@@ -10,6 +10,11 @@ yarn install
 yarn serve
 ```
 
+### Compiles for development and starts the server
+```
+yarn start
+```
+
 ### Compiles and minifies for production
 ```
 yarn build
