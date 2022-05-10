@@ -2,10 +2,22 @@
   <div>
     <form @submit.prevent="login">
       <label for="email"> Email: </label>
-      <input v-model="email" type="email" name="email" value />
+      <input
+        autocomplete="off"
+        v-model="email"
+        type="email"
+        name="email"
+        value
+      />
 
       <label for="password"> Password: </label>
-      <input v-model="password" type="password" name="password" value />
+      <input
+        autocomplete="off"
+        v-model="password"
+        type="password"
+        name="password"
+        value
+      />
       <p>{{ error }}</p>
       <button type="submit" name="button">Login</button>
     </form>
@@ -15,38 +27,29 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-import store from "@/store";
-import router from "@/router";
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-export default defineComponent({
-  setup() {
-    const email = ref("");
-    const password = ref("");
-    const error = ref(null);
+const router = useRouter();
+const store = useStore();
 
-    function login() {
-      store
-        .dispatch("login", {
-          email: email.value,
-          password: password.value,
-        })
-        .then(() => {
-          router.push({ name: "dashboard" });
-        })
-        .catch((err) => {
-          error.value = err.response.data.error;
-        });
-    }
-    return {
-      email,
-      password,
-      error,
-      login,
-    };
-  },
-});
+const email = ref("");
+const password = ref("");
+const error = ref(null);
+
+const login = () => {
+  store
+    .dispatch("login", {
+      email: email.value,
+      password: password.value,
+    })
+    .then(() => {
+      router.push({ name: "dashboard" });
+    })
+    .catch((err) => {
+      error.value = err.response.data.error;
+    });
+};
 </script>
-
-<style scoped></style>

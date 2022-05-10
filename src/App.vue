@@ -5,31 +5,27 @@
   </div>
   <router-view />
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import AppNav from "@/components/AppNav.vue";
-import store from "./store";
+import { useStore } from "vuex";
 import axios from "axios";
 
-export default defineComponent({
-  components: { AppNav },
-  created() {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const userData = JSON.parse(userString);
-      store.commit("SET_USER_DATA", userData);
+const store = useStore();
+
+const userString = localStorage.getItem("user");
+if (userString) {
+  const userData = JSON.parse(userString);
+  store.commit("SET_USER_DATA", userData);
+}
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      store.dispatch("logout");
     }
-    axios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error.response.status === 401) {
-          store.dispatch("logout");
-        }
-        return Promise.reject(error);
-      }
-    );
-  },
-});
+    return Promise.reject(error);
+  }
+);
 </script>
 
 <style lang="scss">

@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAtuh) && !loggedIn) {
     if (!loggedIn) {
-      next("/");
+      next({ name: "Home" });
     }
   }
   next();

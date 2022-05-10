@@ -1,5 +1,9 @@
 # authentication-vuejs
 
+# Demo
+
+![vue-authentication demo](demo.gif)
+
 ## Project setup
 ```
 yarn install

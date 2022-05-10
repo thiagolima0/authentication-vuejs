@@ -1,21 +1,16 @@
 <template>
   <div class="event-card">
-    <span>@{{ event.time }} on {{ event.date }}</span>
-    <h4>{{ event.title }}</h4>
+    <span>@{{ props.event.time }} on {{ props.event.date }}</span>
+    <h4>{{ props.event.title }}</h4>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "EventCard",
-  props: {
-    event: {
-      type: Object,
-      default: () => {
-        return {};
-      },
+<script setup lang="ts">
+const props = defineProps({
+  event: {
+    type: Object,
+    default: () => {
+      return {};
     },
   },
 });

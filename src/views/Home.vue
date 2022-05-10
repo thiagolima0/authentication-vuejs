@@ -10,13 +10,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { authComputed } from "@/store/helpers";
+<script setup lang="ts">
+import { computed } from "vue";
+import store from "@/store";
 
-export default defineComponent({
-  computed: {
-    ...authComputed,
-  },
-});
+const loggedIn = computed(() => store.getters.loggedIn);
 </script>

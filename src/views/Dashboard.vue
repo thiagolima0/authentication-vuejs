@@ -8,25 +8,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import axios from "axios";
 import EventCard from "@/components/EventCard.vue";
 import EventModel from "@/model/EventModel";
 
-export default defineComponent({
-  components: { EventCard },
-  data() {
-    return {
-      isLoading: true,
-      events: [] as EventModel[],
-    };
-  },
-  created() {
-    axios.get("//localhost:3000/dashboard").then(({ data }) => {
-      this.events = data.events.events;
-      this.isLoading = false;
-    });
-  },
-});
+const isLoading = ref(true);
+const events = ref([] as EventModel[]);
+
+const fecthDashboard = () => {
+  axios.get("//localhost:3000/dashboard").then(({ data }) => {
+    events.value = data.events.events;
+    isLoading.value = false;
+  });
+};
+
+fecthDashboard();
 </script>

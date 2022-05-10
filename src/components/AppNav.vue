@@ -9,26 +9,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { useStore } from "vuex";
+import { computed } from "vue";
 
-import { authComputed } from "@/store/helpers";
-import store from "@/store";
+const store = useStore();
 
-export default defineComponent({
-  computed: {
-    ...authComputed,
-  },
-  setup() {
-    function logout() {
-      store.dispatch("logout");
-      console.log("logout");
-    }
-    return {
-      logout,
-    };
-  },
-});
+const loggedIn = computed(() => store.getters.loggedIn);
+
+const logout = () => {
+  store.dispatch("logout");
+};
 </script>
 
 <style lang="scss" scoped>
